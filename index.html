@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Calculator</title>
     <link rel="stylesheet" href="styles.css">
-    <title>Kalkulator Pesanan</title>
 </head>
 <body>
-    <h1>Kalkulator Pesanan</h1>
-    <div id="menu"></div> <!-- Menu akan di-generate oleh JavaScript -->
-
-    <h2>Pesanan Anda:</h2>
+    <h1>Order Calculator</h1>
+    <div id="menu"></div>
+    
     <ul id="orderList"></ul>
     <p>Total: Rp <span id="total">0</span></p>
-
-    <!-- Tombol Reset -->
-    <button id="resetButton" onclick="resetOrder()">Reset Pesanan</button>
+    
+    <input type="number" id="payment" placeholder="Masukkan jumlah pembayaran" />
+    <button id="payButton">Bayar</button>
+    <p>Kembalian: Rp <span id="change">0</span></p>
+    <button id="resetButton">Reset</button>
 
     <script src="script.js"></script>
 </body>
