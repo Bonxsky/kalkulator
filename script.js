@@ -41,7 +41,11 @@ function addItem(item) {
         orderList[item.name].count++;
     } else {
         // Jika belum, tambahkan item dengan jumlah 1
-        orderList[item.name] = { price: item.price, count: 1, image: item.image };
+        orderList[item.name] = { 
+            price: item.price,
+            count: 1,
+            image: item.image
+        };
     }
 
     updateOrderList();
@@ -63,9 +67,13 @@ function updateOrderList() {
         img.alt = itemName;
         img.className = 'order-img';
         
+        // Hitung harga berdasarkan jumlah
+        const itemTotalPrice = item.price * item.count;
+        let itemText = `${itemName} x ${item.count} - Rp ${itemTotalPrice}`;
+
         // Tambahkan teks deskripsi item
         const text = document.createElement('span');
-        text.textContent = `${itemName} x ${item.count} - Rp ${item.price * item.count}`;
+        text.textContent = itemText;
 
         // Tambahkan gambar dan teks ke elemen list item
         listItem.appendChild(img);
@@ -74,7 +82,7 @@ function updateOrderList() {
         // Tambahkan elemen list item ke daftar pesanan
         orderListElement.appendChild(listItem);
 
-        total += item.price * item.count;
+        total += itemTotalPrice;
     }
 
     document.getElementById("total").textContent = total;
@@ -86,7 +94,21 @@ function resetOrder() {
 
     document.getElementById("orderList").innerHTML = ''; // Kosongkan daftar tampilan
     document.getElementById("total").textContent = total; // Perbarui tampilan total
+    document.getElementById("payment").value = ''; // Kosongkan input pembayaran
+    document.getElementById("change").textContent = '0'; // Reset tampilan kembalian
+}
+
+function calculateChange() {
+    const paymentAmount = parseFloat(document.getElementById("payment").value) || 0;
+    const change = paymentAmount - total;
+    document.getElementById("change").textContent = change >= 0 ? change : '0';
 }
 
 // Inisialisasi menu saat halaman dimuat
 createMenu();
+
+// Event listener untuk tombol bayar
+document.getElementById("payButton").addEventListener("click", calculateChange);
+
+// Event listener untuk tombol reset
+document.getElementById("resetButton").addEventListener("click", resetOrder);
